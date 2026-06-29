@@ -21,6 +21,9 @@ export const auth = betterAuth({
       verification: "verifications",
     }
   }),
+
+
+  
   
   socialProviders: {
     google: {
