@@ -3,7 +3,6 @@
 import { useTutors } from "@/hooks/useTutors";
 import { FaCode, FaHeartbeat, FaLanguage, FaCalculator, FaPaintBrush, FaBriefcase } from "react-icons/fa";
 
-// Static mapping for subjects with distinct icons and theme colors
 const SUBJECTS = [
   { name: "Computer Science", icon: FaCode, color: "bg-blue-500/10 text-blue-500", count: "120+ Tutors" },
   { name: "Health & Medicine", icon: FaHeartbeat, color: "bg-emerald-500/10 text-emerald-500", count: "85+ Tutors" },
@@ -17,7 +16,6 @@ export default function PopularSubjects() {
   const { setSearchQuery } = useTutors();
 
   const handleSubjectClick = (subjectName) => {
-    // Updates search query globally when a category card is clicked
     setSearchQuery(subjectName);
   };
 

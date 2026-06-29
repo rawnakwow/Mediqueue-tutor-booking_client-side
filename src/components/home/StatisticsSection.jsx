@@ -1,7 +1,6 @@
 "use client";
 
 import { useTutors } from "@/hooks/useTutors";
-// CHANGED: FaUserGraduation -> FaUserGraduate
 import { FaUserGraduate, FaChalkboardTeacher, FaBookOpen, FaClock } from "react-icons/fa";
 
 export default function StatisticsSection() {
@@ -18,7 +17,7 @@ export default function StatisticsSection() {
     {
       label: "Happy Students",
       value: "4,500+",
-      icon: FaUserGraduate, // CHANGED: Updated here as well
+      icon: FaUserGraduate, 
       color: "text-blue-500 bg-blue-500/10",
     },
     {
