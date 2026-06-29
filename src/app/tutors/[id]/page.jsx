@@ -15,7 +15,6 @@ export default function SingleTutorProfilePage({ params: paramsPromise }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // 2. Fetch specific data rows from Express MongoDB backend endpoints
   useEffect(() => {
     if (!tutorId) return;
 
@@ -40,7 +39,6 @@ export default function SingleTutorProfilePage({ params: paramsPromise }) {
     fetchSingleTutor();
   }, [tutorId]);
 
-  // 3. Conditional state checks to keep pipeline layouts clean
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">

@@ -4,10 +4,11 @@
 // Keep the rest of your home section imports unchanged
 import Banner from "@/components/home/Banner";
 import StatisticsSection from "@/components/home/StatisticsSection";
-import PopularTutors from "@/components/home/PopularTutors";
+import PopularSubjects from "@/components/home/PopularSubjects";
 import FeaturedTutors from "@/components/home/FeaturedTutors"; 
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import StudentReviews from "@/components/home/StudentReviews";
+
 
 
 export default function Home() {
@@ -17,17 +18,16 @@ export default function Home() {
 
 
       <Banner />
-      
+
+      <FeaturedTutors />
       
       <StatisticsSection />
       
-      <PopularTutors />
-      
-      <FeaturedTutors />
+      <PopularSubjects/>
       
       <WhyChooseUs />
       
-            <StudentReviews />
+     <StudentReviews />
     </div>
   );
 }
