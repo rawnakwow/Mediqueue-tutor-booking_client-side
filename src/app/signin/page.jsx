@@ -8,6 +8,9 @@ import { Suspense } from "react";
 import { Loader } from "@/components/shared/loader"; // Changed to lowercase 'l' and added curly braces
 
 
+
+
+
 export default function SignIn() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4 relative overflow-hidden">

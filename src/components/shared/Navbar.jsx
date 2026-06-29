@@ -22,6 +22,9 @@ export default function Navbar() {
     });
   };
 
+
+
+  
   return (
     <header className="sticky top-0 z-50 w-full border-b border-b-divider bg-background/70 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
