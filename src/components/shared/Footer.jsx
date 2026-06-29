@@ -13,7 +13,6 @@ export default function Footer() {
               Empowering patients and clinics with real-time, smart medical queue management.          </p>
         </div>
         
-        
         <div>
           <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
           <ul className="space-y-2 text-default-500 text-sm">
