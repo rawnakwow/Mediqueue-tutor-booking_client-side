@@ -3,7 +3,6 @@
 import { FaCheckCircle, FaGraduationCap, FaBookmark } from "react-icons/fa";
 
 export function Curriculum({ subject }) {
-  // Mock standard layout syllabus array depending on subject field
   const modules = [
     { title: "Foundations & Core Principles", desc: "Introduction to basic paradigms, terminology, and structural frameworks." },
     { title: "Intermediate Applications", desc: "Hands-on projects, standard practices, and solving real-world case studies." },
@@ -20,12 +19,10 @@ export function Curriculum({ subject }) {
       <div className="space-y-6">
         {modules.map((mod, index) => (
           <div key={index} className="flex gap-4 items-start group">
-            {/* Step Count Badge */}
             <div className="w-8 h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold text-xs shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
               {index + 1}
             </div>
             
-            {/* Module Context text */}
             <div className="min-w-0">
               <h4 className="font-semibold text-sm text-foreground tracking-tight">
                 {mod.title}
@@ -38,7 +35,6 @@ export function Curriculum({ subject }) {
         ))}
       </div>
 
-      {/* Target Prerequisites Notice block */}
       <div className="mt-6 pt-6 border-t border-divider/60 flex items-start gap-3 bg-content2/30 rounded-xl p-4 text-xs text-default-500">
         <FaBookmark className="text-violet-500 shrink-0 mt-0.5" />
         <div>
