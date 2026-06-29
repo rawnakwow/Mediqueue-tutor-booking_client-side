@@ -8,7 +8,6 @@ import { Loader } from "@/components/shared/loader";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { ErrorMessage } from "@/components/shared/ErrorMessage";
 
-// MANDATORY STEP: This must use "export default" to be recognized as a Next.js route page
 export default function TutorsCatalogPage() {
   const { 
     filteredTutors, 
@@ -20,17 +19,14 @@ export default function TutorsCatalogPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-10 min-h-screen">
-      {/* Reusable Section Headers */}
       <PageTitle 
         title="Find Professional Tutors" 
         subtitle="Browse through our catalog of verified expert educators and book a real-time session slot today."
         centered
       />
 
-      {/* Dynamic Search Controller Box */}
       <SearchBar value={searchQuery} onChange={setSearchQuery} />
 
-      {/* Conditional Interface Rendering Logic Pipeline */}
       {isLoading ? (
         <Loader text="Loading available tutor listings..." />
       ) : error ? (
