@@ -15,7 +15,7 @@ export function UpdateTutorModal({ tutor, onClose, onSuccess }) {
     e.preventDefault();
     try {
       setIsSubmitting(true);
-      const response = await fetch(`http://localhost:5000/tutors/${tutor._id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tutors/${tutor._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

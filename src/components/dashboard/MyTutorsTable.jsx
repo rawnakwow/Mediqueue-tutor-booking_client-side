@@ -69,7 +69,7 @@ export function MyTutorsTable({ tutors = [], onRefresh }) {
 
       {deletingTutorId && (
         <DeleteModal
-          endpoint={`http://localhost:5000/tutors/${deletingTutorId}`}
+          endpoint={`${process.env.NEXT_PUBLIC_API_URL}/tutors/${deletingTutorId}`}
           onClose={() => setDeletingTutorId(null)}
           onSuccess={() => {
             setDeletingTutorId(null);

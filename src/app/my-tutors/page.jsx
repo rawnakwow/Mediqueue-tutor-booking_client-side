@@ -25,7 +25,7 @@ export default function MyTutorsDashboardPage() {
       setError(null);
       
       // Query parameters pass user email to fetch creator-isolated tables
-      const response = await fetch(`http://localhost:5000/tutors?email=${encodeURIComponent(user.email)}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tutors?email=${encodeURIComponent(user.email)}`);
 
       if (!response.ok) {
         throw new Error("Failed to load your active tutor listings from database.");
@@ -41,7 +41,7 @@ export default function MyTutorsDashboardPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [user?.email]);
+  }, [user]);
 
   // 2. Authentication Access Guard Protection Layer
   useEffect(() => {

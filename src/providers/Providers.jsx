@@ -1,13 +1,12 @@
 "use client";
 
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import ThemeProviders from "@/providers/ThemeProviders";
+import AuthProviderWrapper from "@/providers/AuthProvider";
 
-export function Providers({ children }) {
+export default function Providers({ children }) {
   return (
-    <>
-      {children}
-      <ToastContainer position="top-right" autoClose={3000} />
-    </>
+    <ThemeProviders>
+      <AuthProviderWrapper>{children}</AuthProviderWrapper>
+    </ThemeProviders>
   );
 }

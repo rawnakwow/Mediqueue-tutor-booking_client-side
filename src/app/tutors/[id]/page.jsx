@@ -21,7 +21,7 @@ export default function SingleTutorProfilePage({ params: paramsPromise }) {
     const fetchSingleTutor = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(`http://localhost:5000/tutors/${tutorId}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tutors/${tutorId}`);
 
         if (!response.ok) {
           throw new Error("Tutor profile could not be found or has been removed.");

@@ -1,7 +1,13 @@
-/** @type {import('next').NextConfig} */
+/** @type {import("next").NextConfig} */
 const nextConfig = {
-  /* config options here */
-  reactCompiler: true,
+  async rewrites() {
+    return [
+      {
+        source: "/server-api/:path*",
+        destination: `${process.env.NEXT_PUBLIC_API_URL}/:path*`,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

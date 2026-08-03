@@ -75,7 +75,7 @@ export default function Navbar() {
                     alt={session.user.name || "User profile"}
                     src={
                       session.user.image ||
-                      `https://ui-avatars.com{encodeURIComponent(
+                      `https://ui-avatars.com/api/?name=${encodeURIComponent(
                         session.user.name || "User"
                       )}&background=6c63ff&color=fff`
                     }

@@ -1,37 +1,46 @@
 "use client";
 
-// 1. Removed CardBody and CardHeader from the main import destructurer
 import { Card } from "@heroui/react";
 import { motion } from "framer-motion";
 import LoginForm from "@/components/auth/LoginForm";
-import { Suspense } from "react";
-import { Loader } from "@/components/shared/loader"; // Changed to lowercase 'l' and added curly braces
-
-
-
-
 
 export default function SignIn() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4 relative overflow-hidden">
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/20 blur-[100px] pointer-events-none"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-secondary/20 blur-[100px] pointer-events-none"></div>
-      
-      <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="w-full max-w-md z-10">
-        <Card className="w-full shadow-2xl border border-divider/50 bg-background/60 backdrop-blur-xl">
-          
-          <Card.Header className="flex flex-col gap-1 text-center pt-8 pb-4">
-            <h1 className="text-3xl font-extrabold tracking-tight">Welcome Back</h1>
-            <p className="text-default-500 text-sm">Sign in to your SkillSphere account to continue learning.</p>
-          </Card.Header>
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background p-4">
+      <div className="pointer-events-none absolute -left-[10%] -top-[10%] h-[40%] w-[40%] rounded-full bg-primary/20 blur-[100px]" />
 
-          <Card.Content className="px-8 pb-8">
-            <Suspense fallback={<Loader />}>
-              <LoginForm />
-            </Suspense>
-          </Card.Content>
+      <div className="pointer-events-none absolute -bottom-[10%] -right-[10%] h-[40%] w-[40%] rounded-full bg-secondary/20 blur-[100px]" />
+
+      <motion.div
+        initial={{
+          opacity: 0,
+          y: 30,
+        }}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{
+          duration: 0.5,
+        }}
+        className="z-10 w-full max-w-md"
+      >
+        <Card className="w-full overflow-hidden border border-divider/50 bg-background/80 shadow-2xl backdrop-blur-xl">
+          <div className="px-6 pb-3 pt-8 text-center sm:px-8">
+            <h1 className="text-3xl font-extrabold tracking-tight">
+              Welcome Back
+            </h1>
+
+            <p className="mt-2 text-sm text-default-500">
+              Sign in to manage your tutors and booked sessions.
+            </p>
+          </div>
+
+          <div className="px-6 pb-8 pt-4 sm:px-8">
+            <LoginForm />
+          </div>
         </Card>
       </motion.div>
-    </div>
+    </main>
   );
 }
