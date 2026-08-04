@@ -1,26 +1,82 @@
 "use client";
 
-import { createContext, useContext } from "react";
-import { authClient } from "@/lib/auth-client";
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
-const AuthContext = createContext();
+const AuthContext = createContext(undefined);
 
 export function AuthProvider({ children }) {
-  // Let better-auth handle background token refetching and multi-tab syncing
-  const { data: session, isPending, error } = authClient.useSession();
-  const user = session?.user || null;
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+  const [isPending, setIsPending] = useState(true);
+
+  useEffect(() => {
+    try {
+      const storedUser = localStorage.getItem("user");
+      const storedToken = localStorage.getItem("access-token");
+
+      if (storedUser && storedToken) {
+        setUser(JSON.parse(storedUser));
+        setToken(storedToken);
+      } else {
+        setUser(null);
+        setToken(null);
+      }
+    } catch (error) {
+      console.error("Authentication restore error:", error);
+
+      localStorage.removeItem("user");
+      localStorage.removeItem("access-token");
+
+      setUser(null);
+      setToken(null);
+    } finally {
+      setIsPending(false);
+    }
+  }, []);
+
+  const login = useCallback((userData, jwtToken) => {
+    if (!userData || !jwtToken) {
+      throw new Error("User information and JWT are required.");
+    }
+
+    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("access-token", jwtToken);
+
+    setUser(userData);
+    setToken(jwtToken);
+  }, []);
+
+  const logout = useCallback(() => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("access-token");
+
+    setUser(null);
+    setToken(null);
+  }, []);
+
+  const value = useMemo(
+    () => ({
+      user,
+      token,
+      login,
+      logout,
+      isPending,
+      isAuthenticated: Boolean(user && token),
+    }),
+    [user, token, login, logout, isPending]
+  );
 
   return (
-    <AuthContext.Provider value={{ session, isPending, error, user }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-export const useAuthContext = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuthContext must be used within an AuthProvider");
-  }
-  return context;
-};
+export default AuthContext;

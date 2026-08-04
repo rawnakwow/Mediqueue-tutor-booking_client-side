@@ -1,57 +1,128 @@
-// src/components/auth/LoginForm.jsx
 "use client";
+
 import { useState } from "react";
-import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
+import { useAuth } from "@/hooks/useAuth";
+
 export default function LoginForm() {
-    const router = useRouter();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const { login } = useAuth();
 
-    const submit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        
-        const { data, error } = await authClient.signIn.email({
-            email,
-            password,
-        });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-        setLoading(false);
+  const submit = async (event) => {
+    event.preventDefault();
 
-        if (error) {
-            toast.error(error.message || "Invalid credentials");
-        } else {
-            toast.success("Login successful");
-            router.push("/");
-            router.refresh();
-        }
-    };
+    if (loading) return;
 
-    return (
-        <form onSubmit={submit} className="flex flex-col gap-2">
-            <input 
-                type="email"
-                placeholder="Email" 
-                value={email}
-                onChange={e => setEmail(e.target.value)} 
-                required
-                className="p-2 border rounded"
-            />
-            <input 
-                type="password" 
-                placeholder="Password" 
-                value={password}
-                onChange={e => setPassword(e.target.value)} 
-                required
-                className="p-2 border rounded"
-            />
-            <button type="submit" disabled={loading} className="p-2 bg-primary text-white rounded">
-                {loading ? "Logging in..." : "Login"}
-            </button>
-        </form>
-    );
+    try {
+      setLoading(true);
+
+      const response = await fetch("/server-api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email.trim().toLowerCase(),
+          password,
+        }),
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        throw new Error(
+          data?.message || "Invalid email or password."
+        );
+      }
+
+      if (!data?.user || !data?.token) {
+        console.error("Unexpected login response:", data);
+
+        throw new Error(
+          "The server did not return user information and a JWT."
+        );
+      }
+
+      // Saves user and access-token through AuthContext
+      login(data.user, data.token);
+
+      toast.success("Login successful.");
+
+      router.replace("/");
+      router.refresh();
+    } catch (error) {
+      console.error("Login error:", error);
+
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Unable to sign in."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <form
+      onSubmit={submit}
+      className="flex flex-col gap-4"
+    >
+      <div>
+        <label
+          htmlFor="email"
+          className="mb-2 block text-sm font-medium"
+        >
+          Email
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          autoComplete="email"
+          required
+          disabled={loading}
+          className="w-full rounded-xl border border-divider bg-background px-4 py-3 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:opacity-60"
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="password"
+          className="mb-2 block text-sm font-medium"
+        >
+          Password
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          placeholder="Enter your password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          autoComplete="current-password"
+          required
+          disabled={loading}
+          className="w-full rounded-xl border border-divider bg-background px-4 py-3 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:opacity-60"
+        />
+      </div>
+
+      <button
+        type="submit"
+        disabled={loading}
+        className="h-11 w-full rounded-xl bg-primary font-semibold text-primary-foreground transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        {loading ? "Logging in..." : "Login"}
+      </button>
+    </form>
+  );
 }

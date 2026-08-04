@@ -1,7 +1,16 @@
 "use client";
 
-import { AuthProvider } from "@/context/AuthContext";
+import { HeroUIProvider } from "@heroui/react";
+import { Toaster } from "react-hot-toast";
+import AuthProvider  from "@/context/AuthContext";
 
-export default function AuthProviderWrapper({ children }) {
-  return <AuthProvider>{children}</AuthProvider>;
+export default function Providers({ children }) {
+  return (
+    <HeroUIProvider>
+      <AuthProvider>
+        {children}
+        <Toaster position="top-right" />
+      </AuthProvider>
+    </HeroUIProvider>
+  );
 }
